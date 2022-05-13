@@ -1,0 +1,33 @@
+version: '2'
+services:
+
+  kinesis:
+    image: localstack/localstack:0.14.2
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=kinesis,dynamodb
+      - DEFAULT_REGION=eu-west-2
+    networks:
+      default:
+        aliases:
+          - kinesis.stream
+
+  producer:
+    build: ./producer
+    ports:
+      - "8383:8383"
+
+  consumer1:
+    build: ./consumer
+    ports:
+      - "8484:8484"
+
+  consumer2:
+    build: ./consumer
+    ports:
+      - "8585:8484"
+  consumer3:
+    build: ./consumer
+    ports:
+      - "8686:8484"
